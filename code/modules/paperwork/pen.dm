@@ -23,6 +23,7 @@
 	matter = list("metal" = 10)
 	var/colour = "black"	//what colour the ink is!
 	pressure_resistance = 2
+	var/status = 0
 
 
 /obj/item/weapon/pen/blue
@@ -50,6 +51,33 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
+
+/obj/item/weapon/pen/attackby(obj/item/W as obj, mob/user as mob)
+   // Vape pen construction //
+	if(istype(W,/obj/item/weapon/wirecutters) && !status)
+		status = 1
+		user << "\blue You cut the end of the pen off."
+	if (status && istype(W, /obj/item/device/assembly/igniter))
+		var/obj/item/device/assembly/igniter/I = W
+		if (!I.secured) // check if igniter is secured too
+			user << "\blue You replace the insides of the pen with the igniter's heating element."
+			var/obj/item/clothing/mask/smokable/vape/V = new/obj/item/clothing/mask/smokable/vape(user.loc)
+			if (user.client)
+				user.client.screen -= src
+				user.client.screen -= I
+			if (user.r_hand == src)
+				user.u_equip(V)
+			else
+				user.u_equip(V)
+			src.layer = initial(src.layer)
+			user.u_equip(V)
+			if (user.client)
+				user.client.screen -= src
+				user.client.screen -= I
+			del(src)
+			del(I) // igniter and pen are destroyed
+			return
+
 
 
 /*
