@@ -164,17 +164,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		del(src)
 	else
-		new /obj/effect/decal/cleanable/ash(T)
 		if(ismob(loc))
 			var/mob/living/M = loc
-			if (!nomessage)
-				M << "<span class='notice'>Your [name] goes out, and you empty the ash.</span>"
-			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
 			M.update_inv_wear_mask(0)
 			M.update_inv_l_hand(0)
 			M.update_inv_r_hand(1)
+		if (!nomessage)
+			T.visible_message("<span class='notice'>[name] goes out.</span>")
+		lit = 0
+		icon_state = icon_off
+		item_state = icon_off
+
 		processing_objects.Remove(src)
 
 /obj/item/clothing/mask/smokable/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -306,6 +306,57 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.update_inv_wear_mask(0)
 	user.update_inv_l_hand(0)
 	user.update_inv_r_hand(1)
+
+//////////////
+// VAPE PEN //
+//////////////
+
+/obj/item/clothing/mask/smokable/vape
+	name = "vape pen"
+	desc = "A pen repurposed for smoking reagents."
+	icon_state = "vapeoff"
+	item_state = "vapeoff"
+	icon_on = "vapeon"
+	icon_off = "vapeoff"
+	chem_volume = 20
+	flags = OPENCONTAINER
+
+/obj/item/clothing/mask/smokable/vape/attack_self(mob/user)
+	if (reagents && reagents.total_volume && !lit)
+		light()
+		return
+	if (lit)
+		die()
+		return
+
+	user << "<span class='notice'>The vape pen is empty.<span>"
+
+/obj/item/clothing/mask/smokable/vape/process()
+	if(reagents && reagents.total_volume) // check if it has any reagents at all
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				if(istype(C, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = C
+					if(H.species.flags & IS_SYNTHETIC)
+						return
+
+			reagents.trans_to(C, 0.2) // Most of it is not inhaled... balance reasons.
+			if (prob(50))
+				C << "\red The [src] burns your lip!"
+				C.adjustFireLoss(1)
+
+
+			//reagents.reaction(C)
+		else // else just remove some of the reagents
+			reagents.remove_any(0.2)
+
+	else die() // vape is out of juice, turn off
+
+/obj/item/clothing/mask/smokable/vape/attackby()
+	return
+
+
 
 /////////////////
 //SMOKING PIPES//
