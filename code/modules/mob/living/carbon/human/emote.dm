@@ -99,6 +99,11 @@
 					message = "<B>[src]</b> salutes."
 			m_type = 1
 
+
+		if ("scream")
+			m_type = 1
+			message= "<B>[src]</B> screams!"
+
 		if ("choke")
 			if(miming)
 				message = "<B>[src]</B> clutches his throat desperately!"
@@ -110,6 +115,11 @@
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
+
+		if ("fart")
+			message= "<B>[src]</B> farts!"
+			playsound(src, 'sound/misc/fart.ogg', 100, 1)
+			m_type=1
 
 		if ("clap")
 			if (!src.restrained())
@@ -189,6 +199,7 @@
 		if ("blush")
 			message = "<B>[src]</B> blushes."
 			m_type = 1
+
 
 		if ("wave")
 			message = "<B>[src]</B> waves."
