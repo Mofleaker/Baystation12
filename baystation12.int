@@ -1,6 +1,11 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+LAST_COMPILE_TIME: 1438650476
+DIR: code code\_onclick code\game code\game\machinery\computer code\game\mecha code\game\mecha\equipment\tools code\game\objects code\game\objects\items code\game\objects\items\devices code\game\objects\items\weapons code\modules\mob code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\paperwork code\modules\power maps sound sound\items 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 507.1285
+WINDOW: code\modules\mob\login.dm;code\modules\mob\typing_indicator.dm;code\modules\mob\living\carbon\human\emote.dm;code\game\sound.dm;code\modules\paperwork\pen.dm;code\game\objects\items\devices\transfer_valve.dm;code\game\objects\items\devices\flash.dm;code\modules\power\apc.dm;code\modules\mob\mob.dm;code\game\objects\items\weapons\cigs_lighters.dm
+FILE: code\game\objects\items\weapons\cigs_lighters.dm
 */
 // END_INTERNALS

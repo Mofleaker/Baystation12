@@ -102,6 +102,7 @@
 
 		if ("scream")
 			m_type = 1
+			playsound(src, 'sound/voice/scream.ogg', 100, 1)
 			message= "<B>[src]</B> screams!"
 
 		if ("choke")

@@ -61,10 +61,11 @@
 		var/obj/item/device/assembly/igniter/I = W
 		if (!I.secured) // check if igniter is secured too
 			user << "\blue You replace the insides of the pen with the igniter's heating element."
+
 			var/obj/item/clothing/mask/smokable/vape/V = new/obj/item/clothing/mask/smokable/vape(user.loc)
+			/*
 			if (user.client)
 				user.client.screen -= src
-				user.client.screen -= I
 			if (user.r_hand == src)
 				user.u_equip(V)
 			else
@@ -73,11 +74,11 @@
 			user.u_equip(V)
 			if (user.client)
 				user.client.screen -= src
-				user.client.screen -= I
-			del(src)
+			*/
 			del(I) // igniter and pen are destroyed
-			return
+			user.put_in_hands(V)
 
+			del(src)
 
 
 /*
