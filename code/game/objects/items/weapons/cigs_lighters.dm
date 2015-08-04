@@ -341,19 +341,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					if(H.species.flags & IS_SYNTHETIC)
 						return
 
-			reagents.trans_to(C, 0.2) // Most of it is not inhaled... balance reasons.
-			if (prob(50))
-				C << "\red The [src] burns your lip!"
+			reagents.trans_to(C, REAGENTS_METABOLISM) // Most of it is not inhaled... balance reasons.
+			if (prob(1))
+				C << "\red The vaper burns your lip!"
 				C.adjustFireLoss(1)
 
 
 			//reagents.reaction(C)
 		else // else just remove some of the reagents
-			reagents.remove_any(0.2)
+			reagents.remove_any(REAGENTS_METABOLISM)
 
 	else die() // vape is out of juice, turn off
+	return
 
 /obj/item/clothing/mask/smokable/vape/attackby()
+	..()
 	return
 
 
